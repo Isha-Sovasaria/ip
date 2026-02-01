@@ -17,6 +17,10 @@ public class Bytey {
             }
             else if (input.equals("list")) {
                 showList();
+            } else if (input.startsWith("mark ")) {
+                markTask(input);
+            } else if (input.startsWith("unmark ")) {
+                unmarkTask(input);
             } else {
                 addTask(input);
             }
@@ -41,11 +45,37 @@ public class Bytey {
 
     private static void showList() {
         System.out.println(LINE);
+        System.out.println(" Here are the tasks in your list:");
 
         for (int i = 0; i < taskCount; i++) {
-            System.out.println(" " + (i + 1) + ". " + tasks[i].getDescription());
+            Task task = tasks[i];
+            System.out.println(" " + (i + 1) + ".["
+                    + task.getStatusIcon() + "] "
+                    + task.getDescription());
         }
 
+        System.out.println(LINE);
+    }
+
+    private static void markTask(String input) {
+        int index = Integer.parseInt(input.split(" ")[1]) - 1;
+        Task task = tasks[index];
+        task.markAsDone();
+
+        System.out.println(LINE);
+        System.out.println(" Nice! I've marked this task as done:");
+        System.out.println("   [X] " + task.getDescription());
+        System.out.println(LINE);
+    }
+
+    private static void unmarkTask(String input) {
+        int index = Integer.parseInt(input.split(" ")[1]) - 1;
+        Task task = tasks[index];
+        task.markAsNotDone();
+
+        System.out.println(LINE);
+        System.out.println(" OK, I've marked this task as not done yet:");
+        System.out.println("   [ ] " + task.getDescription());
         System.out.println(LINE);
     }
 
