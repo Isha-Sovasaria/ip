@@ -21,8 +21,24 @@ public class Bytey {
                 markTask(input);
             } else if (input.startsWith("unmark ")) {
                 unmarkTask(input);
-            } else {
-                addTask(input);
+            } else if (input.startsWith("todo ")) {
+                String description = input.substring(5);
+                tasks[taskCount++] = new ToDo(description);
+                showAdd();
+
+            } else if (input.startsWith("deadline ")) {
+                String[] parts = input.substring(9).split(" /by ");
+                tasks[taskCount++] = new Deadline(parts[0], parts[1]);
+                showAdd();
+
+            } else if (input.startsWith("event ")) {
+                String[] parts = input.substring(6).split(" /from | /to ");
+                tasks[taskCount++] = new Event(parts[0], parts[1], parts[2]);
+                showAdd();
+            }
+            else {
+                tasks[taskCount++] = new ToDo(input);
+                showAdd();
             }
         }
     }
@@ -33,25 +49,21 @@ public class Bytey {
         System.out.println(" What can I do for you?");
         System.out.println(LINE);
     }
-
-    private static void addTask(String task) {
-        tasks[taskCount] = new Task(task);
-        taskCount++;
-
+    private static void showAdd() {
         System.out.println(LINE);
-        System.out.println(" added: " + task);
+        System.out.println(" Got it. I've added this task:");
+        System.out.println("   " + tasks[taskCount - 1]);
+        System.out.println(" Now you have " + taskCount + " tasks in the list.");
         System.out.println(LINE);
     }
+
 
     private static void showList() {
         System.out.println(LINE);
         System.out.println(" Here are the tasks in your list:");
 
         for (int i = 0; i < taskCount; i++) {
-            Task task = tasks[i];
-            System.out.println(" " + (i + 1) + ".["
-                    + task.getStatusIcon() + "] "
-                    + task.getDescription());
+            System.out.println(" " + (i + 1) + "."+tasks[i]);
         }
 
         System.out.println(LINE);
