@@ -1,13 +1,17 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bytey {
-    private static final String LINE = "____________________________________________________________";
-    private static final int MAX_TASKS = 100;
-    private static Task[] tasks = new Task[MAX_TASKS];
-    private static int taskCount = 0;
+
+    private static final String LINE =
+            "____________________________________________________________";
+
+    private static ArrayList<Task> tasks = new ArrayList<>();
+
     public static void main(String[] args) {
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         showGreeting();
+
         while (true) {
             String input = sc.nextLine();
             try {
@@ -17,35 +21,40 @@ public class Bytey {
                 System.out.println(" " + e.getMessage());
                 System.out.println(LINE);
             }
-
         }
     }
+
     private static void checkInput(String input) throws ByteyException {
+
         if (input.equals("bye")) {
             System.out.println(LINE);
             printExit();
             System.exit(0);
-        }
-        else if (input.equals("list")) {
+
+        } else if (input.equals("list")) {
             showList();
+
         } else if (input.startsWith("mark ")) {
             markTask(input);
+
         } else if (input.startsWith("unmark ")) {
             unmarkTask(input);
-        } else if (input.startsWith("todo")) {
+
+        } else if (input.equals("todo") || input.startsWith("todo ")) {
             handleTodo(input);
 
-        } else if (input.startsWith("deadline ")) {
+        } else if (input.equals("deadline") || input.startsWith("deadline ")) {
             handleDeadline(input);
 
-        } else if (input.startsWith("event ")) {
+        } else if (input.equals("event") || input.startsWith("event ")) {
             handleEvent(input);
-        }
-        else {
+
+        } else {
             throw new ByteyException(
                     "Sorry, I don't understand that command.");
         }
     }
+
     private static void handleTodo(String input) throws ByteyException {
         if (input.equals("todo")) {
             throw new ByteyException(
@@ -53,7 +62,7 @@ public class Bytey {
         }
 
         String description = input.substring(5);
-        tasks[taskCount++] = new ToDo(description);
+        tasks.add(new ToDo(description));
         showAdd();
     }
 
@@ -69,9 +78,10 @@ public class Bytey {
                     "The description of a deadline cannot be empty.");
         }
 
-        tasks[taskCount++] = new Deadline(parts[0], parts[1]);
+        tasks.add(new Deadline(parts[0], parts[1]));
         showAdd();
     }
+
     private static void handleEvent(String input) throws ByteyException {
         if (!input.contains(" /from ") || !input.contains(" /to ")) {
             throw new ByteyException(
@@ -79,7 +89,7 @@ public class Bytey {
         }
 
         String[] parts = input.substring(6).split(" /from | /to ");
-        tasks[taskCount++] = new Event(parts[0], parts[1], parts[2]);
+        tasks.add(new Event(parts[0], parts[1], parts[2]));
         showAdd();
     }
 
@@ -89,21 +99,22 @@ public class Bytey {
         System.out.println(" What can I do for you?");
         System.out.println(LINE);
     }
+
     private static void showAdd() {
         System.out.println(LINE);
         System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + tasks[taskCount - 1]);
-        System.out.println(" Now you have " + taskCount + " tasks in the list.");
+        System.out.println("   " + tasks.get(tasks.size() - 1));
+        System.out.println(" Now you have " + tasks.size()
+                + " tasks in the list.");
         System.out.println(LINE);
     }
-
 
     private static void showList() {
         System.out.println(LINE);
         System.out.println(" Here are the tasks in your list:");
 
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println(" " + (i + 1) + "."+tasks[i]);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(" " + (i + 1) + "." + tasks.get(i));
         }
 
         System.out.println(LINE);
@@ -115,14 +126,16 @@ public class Bytey {
         try {
             index = Integer.parseInt(input.split(" ")[1]) - 1;
         } catch (Exception e) {
-            throw new ByteyException("Please specify a valid task number.");
+            throw new ByteyException(
+                    "Please specify a valid task number.");
         }
 
-        if (index < 0 || index >= taskCount) {
-            throw new ByteyException("That task number does not exist.");
+        if (index < 0 || index >= tasks.size()) {
+            throw new ByteyException(
+                    "That task number does not exist.");
         }
 
-        Task task = tasks[index];
+        Task task = tasks.get(index);
         task.markAsDone();
 
         System.out.println(LINE);
@@ -137,14 +150,16 @@ public class Bytey {
         try {
             index = Integer.parseInt(input.split(" ")[1]) - 1;
         } catch (Exception e) {
-            throw new ByteyException("Please specify a valid task number.");
+            throw new ByteyException(
+                    "Please specify a valid task number.");
         }
 
-        if (index < 0 || index >= taskCount) {
-            throw new ByteyException("That task number does not exist.");
+        if (index < 0 || index >= tasks.size()) {
+            throw new ByteyException(
+                    "That task number does not exist.");
         }
 
-        Task task = tasks[index];
+        Task task = tasks.get(index);
         task.markAsNotDone();
 
         System.out.println(LINE);
