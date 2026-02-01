@@ -2,18 +2,24 @@ import java.util.Scanner;
 
 public class Bytey {
     private static final String LINE = "____________________________________________________________";
-
+    private static final int MAX_TASKS = 100;
+    private static String[] tasks = new String[MAX_TASKS];
+    private static int taskCount = 0;
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
         showGreeting();
         while (true) {
             String input = sc.nextLine();
-            System.out.println(LINE);
             if (input.equals("bye")) {
+                System.out.println(LINE);
                 printExit();
                 break;
             }
-            echoInput(input);
+            else if (input.equals("list")) {
+                showList();
+            } else {
+                addTask(input);
+            }
         }
     }
 
@@ -24,8 +30,22 @@ public class Bytey {
         System.out.println(LINE);
     }
 
-    private static void echoInput(String input) {
-        System.out.println(" " + input);
+    private static void addTask(String task) {
+        tasks[taskCount] = task;
+        taskCount++;
+
+        System.out.println(LINE);
+        System.out.println(" added: " + task);
+        System.out.println(LINE);
+    }
+
+    private static void showList() {
+        System.out.println(LINE);
+
+        for (int i = 0; i < taskCount; i++) {
+            System.out.println(" " + (i + 1) + ". " + tasks[i]);
+        }
+
         System.out.println(LINE);
     }
 
