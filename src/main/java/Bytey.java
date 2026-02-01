@@ -49,6 +49,8 @@ public class Bytey {
         } else if (input.equals("event") || input.startsWith("event ")) {
             handleEvent(input);
 
+        }else if (input.startsWith("delete ")) {
+            deleteTask(input);
         } else {
             throw new ByteyException(
                     "Sorry, I don't understand that command.");
@@ -165,6 +167,30 @@ public class Bytey {
         System.out.println(LINE);
         System.out.println(" OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
+        System.out.println(LINE);
+    }
+    private static void deleteTask(String input) throws ByteyException {
+        int index;
+
+        try {
+            index = Integer.parseInt(input.split(" ")[1]) - 1;
+        } catch (Exception e) {
+            throw new ByteyException(
+                    "Please specify a valid task number to delete.");
+        }
+
+        if (index < 0 || index >= tasks.size()) {
+            throw new ByteyException(
+                    "That task number does not exist.");
+        }
+
+        Task removedTask = tasks.remove(index);
+
+        System.out.println(LINE);
+        System.out.println(" Noted. I've removed this task:");
+        System.out.println("   " + removedTask);
+        System.out.println(" Now you have " + tasks.size()
+                + " tasks in the list.");
         System.out.println(LINE);
     }
 
