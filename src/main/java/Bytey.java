@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -83,7 +84,7 @@ public class Bytey {
                     "The description of a deadline cannot be empty.");
         }
 
-        tasks.add(new Deadline(parts[0], parts[1]));
+        tasks.add(new Deadline(parts[0], LocalDate.parse(parts[1])));
         storage.save(tasks);
         showAdd();
     }
@@ -95,7 +96,7 @@ public class Bytey {
         }
 
         String[] parts = input.substring(6).split(" /from | /to ");
-        tasks.add(new Event(parts[0], parts[1], parts[2]));
+        tasks.add(new Event(parts[0], LocalDate.parse(parts[1]), LocalDate.parse(parts[2])));
         storage.save(tasks);
         showAdd();
     }
