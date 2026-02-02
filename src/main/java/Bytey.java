@@ -7,11 +7,13 @@ public class Bytey {
             "____________________________________________________________";
 
     private static ArrayList<Task> tasks = new ArrayList<>();
+    private static Storage storage = new Storage();
 
     public static void main(String[] args) {
+        System.out.println("Working directory: " + System.getProperty("user.dir"));
         Scanner sc = new Scanner(System.in);
         showGreeting();
-
+        tasks = storage.load();
         while (true) {
             String input = sc.nextLine();
             try {
@@ -65,6 +67,7 @@ public class Bytey {
 
         String description = input.substring(5);
         tasks.add(new ToDo(description));
+        storage.save(tasks);
         showAdd();
     }
 
@@ -81,6 +84,7 @@ public class Bytey {
         }
 
         tasks.add(new Deadline(parts[0], parts[1]));
+        storage.save(tasks);
         showAdd();
     }
 
@@ -92,6 +96,7 @@ public class Bytey {
 
         String[] parts = input.substring(6).split(" /from | /to ");
         tasks.add(new Event(parts[0], parts[1], parts[2]));
+        storage.save(tasks);
         showAdd();
     }
 
@@ -139,7 +144,7 @@ public class Bytey {
 
         Task task = tasks.get(index);
         task.markAsDone();
-
+        storage.save(tasks);
         System.out.println(LINE);
         System.out.println(" Nice! I've marked this task as done:");
         System.out.println("   " + task);
@@ -163,7 +168,7 @@ public class Bytey {
 
         Task task = tasks.get(index);
         task.markAsNotDone();
-
+        storage.save(tasks);
         System.out.println(LINE);
         System.out.println(" OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
@@ -185,7 +190,7 @@ public class Bytey {
         }
 
         Task removedTask = tasks.remove(index);
-
+        storage.save(tasks);
         System.out.println(LINE);
         System.out.println(" Noted. I've removed this task:");
         System.out.println("   " + removedTask);
