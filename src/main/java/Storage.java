@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,12 +60,12 @@ public class Storage {
                 return t;
 
             case "D":
-                Deadline d = new Deadline(parts[2], parts[3]);
+                Deadline d = new Deadline(parts[2], LocalDate.parse(parts[3]));
                 if (parts[1].equals("1")) d.markAsDone();
                 return d;
 
             case "E":
-                Event e = new Event(parts[2], parts[3], parts[4]);
+                Event e = new Event(parts[2], LocalDate.parse(parts[3]), LocalDate.parse(parts[4]));
                 if (parts[1].equals("1")) e.markAsDone();
                 return e;
 
