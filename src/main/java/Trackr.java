@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Bytey {
+public class Trackr {
 
     private static final String LINE =
             "____________________________________________________________";
@@ -19,7 +19,7 @@ public class Bytey {
             String input = sc.nextLine();
             try {
                 checkInput(input);
-            } catch (ByteyException e) {
+            } catch (TrackrException e) {
                 System.out.println(LINE);
                 System.out.println(" " + e.getMessage());
                 System.out.println(LINE);
@@ -27,7 +27,7 @@ public class Bytey {
         }
     }
 
-    private static void checkInput(String input) throws ByteyException {
+    private static void checkInput(String input) throws TrackrException {
 
         if (input.equals("bye")) {
             System.out.println(LINE);
@@ -55,14 +55,14 @@ public class Bytey {
         }else if (input.startsWith("delete ")) {
             deleteTask(input);
         } else {
-            throw new ByteyException(
+            throw new TrackrException(
                     "Sorry, I don't understand that command.");
         }
     }
 
-    private static void handleTodo(String input) throws ByteyException {
+    private static void handleTodo(String input) throws TrackrException {
         if (input.equals("todo")) {
-            throw new ByteyException(
+            throw new TrackrException(
                     "The description of a todo cannot be empty.");
         }
 
@@ -72,15 +72,15 @@ public class Bytey {
         showAdd();
     }
 
-    private static void handleDeadline(String input) throws ByteyException {
+    private static void handleDeadline(String input) throws TrackrException {
         if (!input.contains(" /by ")) {
-            throw new ByteyException(
+            throw new TrackrException(
                     "A deadline must have a /by date.");
         }
 
         String[] parts = input.substring(9).split(" /by ");
         if (parts[0].isEmpty()) {
-            throw new ByteyException(
+            throw new TrackrException(
                     "The description of a deadline cannot be empty.");
         }
 
@@ -89,9 +89,9 @@ public class Bytey {
         showAdd();
     }
 
-    private static void handleEvent(String input) throws ByteyException {
+    private static void handleEvent(String input) throws TrackrException {
         if (!input.contains(" /from ") || !input.contains(" /to ")) {
-            throw new ByteyException(
+            throw new TrackrException(
                     "An event must have /from and /to.");
         }
 
@@ -103,7 +103,7 @@ public class Bytey {
 
     private static void showGreeting() {
         System.out.println(LINE);
-        System.out.println(" Hello! I'm Bytey");
+        System.out.println(" Hello! I'm Trackr");
         System.out.println(" What can I do for you?");
         System.out.println(LINE);
     }
@@ -128,18 +128,18 @@ public class Bytey {
         System.out.println(LINE);
     }
 
-    private static void markTask(String input) throws ByteyException {
+    private static void markTask(String input) throws TrackrException {
         int index;
 
         try {
             index = Integer.parseInt(input.split(" ")[1]) - 1;
         } catch (Exception e) {
-            throw new ByteyException(
+            throw new TrackrException(
                     "Please specify a valid task number.");
         }
 
         if (index < 0 || index >= tasks.size()) {
-            throw new ByteyException(
+            throw new TrackrException(
                     "That task number does not exist.");
         }
 
@@ -152,18 +152,18 @@ public class Bytey {
         System.out.println(LINE);
     }
 
-    private static void unmarkTask(String input) throws ByteyException {
+    private static void unmarkTask(String input) throws TrackrException {
         int index;
 
         try {
             index = Integer.parseInt(input.split(" ")[1]) - 1;
         } catch (Exception e) {
-            throw new ByteyException(
+            throw new TrackrException(
                     "Please specify a valid task number.");
         }
 
         if (index < 0 || index >= tasks.size()) {
-            throw new ByteyException(
+            throw new TrackrException(
                     "That task number does not exist.");
         }
 
@@ -175,18 +175,18 @@ public class Bytey {
         System.out.println("   " + task);
         System.out.println(LINE);
     }
-    private static void deleteTask(String input) throws ByteyException {
+    private static void deleteTask(String input) throws TrackrException {
         int index;
 
         try {
             index = Integer.parseInt(input.split(" ")[1]) - 1;
         } catch (Exception e) {
-            throw new ByteyException(
+            throw new TrackrException(
                     "Please specify a valid task number to delete.");
         }
 
         if (index < 0 || index >= tasks.size()) {
-            throw new ByteyException(
+            throw new TrackrException(
                     "That task number does not exist.");
         }
 

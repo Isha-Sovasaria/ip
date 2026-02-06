@@ -1,35 +1,21 @@
 todo read book
 todo return book
 todo buy bread
-
 list
-
 mark 1
 mark 3
-
 list
-
 unmark 1
-
 list
-
-deadline submit report /by Sunday
-deadline pay bills /by end of month
-
+deadline submit report /by 2022-10-16
+deadline pay bills /by 2022-10-31
 list
-
-event project meeting /from Mon 2pm /to 4pm
-event orientation week /from 4/10/2019 /to 11/10/2019
-
+event project meeting /from 2022-10-14 /to 2022-10-14
+event orientation week /from 2022-10-04 /to 2022-10-11
 list
-
 mark 5
 mark 7
-
 list
-
 unmark 7
-
 list
-
 bye

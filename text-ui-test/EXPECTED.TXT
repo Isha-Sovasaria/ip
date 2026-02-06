@@ -1,3 +1,4 @@
+Working directory: /Users/isha/ip/text-ui-test
 ____________________________________________________________
  Hello! I'm Bytey
  What can I do for you?
@@ -18,223 +19,104 @@ ____________________________________________________________
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 4 tasks in the list.
-____________________________________________________________
-____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ]read book
  2.[T][ ]return book
  3.[T][ ]buy bread
- 4.[T][ ]
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 5 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [X]read book
+   [T][X]read book
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [X]buy bread
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 6 tasks in the list.
+   [T][X]buy bread
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][X]read book
  2.[T][ ]return book
  3.[T][X]buy bread
- 4.[T][ ]
- 5.[T][ ]
- 6.[T][ ]
+____________________________________________________________
+____________________________________________________________
+ OK, I've marked this task as not done yet:
+   [T][ ]read book
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ]read book
+ 2.[T][ ]return book
+ 3.[T][X]buy bread
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [T][ ]
+   [D][ ]submit report (by: Oct 16 2022)
+ Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ]pay bills (by: Oct 31 2022)
+ Now you have 5 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ]read book
+ 2.[T][ ]return book
+ 3.[T][X]buy bread
+ 4.[D][ ]submit report (by: Oct 16 2022)
+ 5.[D][ ]pay bills (by: Oct 31 2022)
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ]project meeting (from: Oct 14 2022 to: Oct 14 2022)
+ Now you have 6 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ]orientation week (from: Oct 04 2022 to: Oct 11 2022)
  Now you have 7 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
- OK, I've marked this task as not done yet:
-   [ ]read book
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 8 tasks in the list.
-____________________________________________________________
-____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ]read book
  2.[T][ ]return book
  3.[T][X]buy bread
- 4.[T][ ]
- 5.[T][ ]
- 6.[T][ ]
- 7.[T][ ]
- 8.[T][ ]
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 9 tasks in the list.
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [D][ ]submit report (by: Sunday)
- Now you have 10 tasks in the list.
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [D][ ]pay bills (by: end of month)
- Now you have 11 tasks in the list.
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 12 tasks in the list.
-____________________________________________________________
-____________________________________________________________
- Here are the tasks in your list:
- 1.[T][ ]read book
- 2.[T][ ]return book
- 3.[T][X]buy bread
- 4.[T][ ]
- 5.[T][ ]
- 6.[T][ ]
- 7.[T][ ]
- 8.[T][ ]
- 9.[T][ ]
- 10.[D][ ]submit report (by: Sunday)
- 11.[D][ ]pay bills (by: end of month)
- 12.[T][ ]
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 13 tasks in the list.
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [E][ ]project meeting (from: Mon 2pm to: 4pm)
- Now you have 14 tasks in the list.
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [E][ ]orientation week (from: 4/10/2019 to: 11/10/2019)
- Now you have 15 tasks in the list.
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 16 tasks in the list.
-____________________________________________________________
-____________________________________________________________
- Here are the tasks in your list:
- 1.[T][ ]read book
- 2.[T][ ]return book
- 3.[T][X]buy bread
- 4.[T][ ]
- 5.[T][ ]
- 6.[T][ ]
- 7.[T][ ]
- 8.[T][ ]
- 9.[T][ ]
- 10.[D][ ]submit report (by: Sunday)
- 11.[D][ ]pay bills (by: end of month)
- 12.[T][ ]
- 13.[T][ ]
- 14.[E][ ]project meeting (from: Mon 2pm to: 4pm)
- 15.[E][ ]orientation week (from: 4/10/2019 to: 11/10/2019)
- 16.[T][ ]
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 17 tasks in the list.
+ 4.[D][ ]submit report (by: Oct 16 2022)
+ 5.[D][ ]pay bills (by: Oct 31 2022)
+ 6.[E][ ]project meeting (from: Oct 14 2022 to: Oct 14 2022)
+ 7.[E][ ]orientation week (from: Oct 04 2022 to: Oct 11 2022)
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [X]
+   [D][X]pay bills (by: Oct 31 2022)
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [X]
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 18 tasks in the list.
+   [E][X]orientation week (from: Oct 04 2022 to: Oct 11 2022)
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ]read book
  2.[T][ ]return book
  3.[T][X]buy bread
- 4.[T][ ]
- 5.[T][X]
- 6.[T][ ]
- 7.[T][X]
- 8.[T][ ]
- 9.[T][ ]
- 10.[D][ ]submit report (by: Sunday)
- 11.[D][ ]pay bills (by: end of month)
- 12.[T][ ]
- 13.[T][ ]
- 14.[E][ ]project meeting (from: Mon 2pm to: 4pm)
- 15.[E][ ]orientation week (from: 4/10/2019 to: 11/10/2019)
- 16.[T][ ]
- 17.[T][ ]
- 18.[T][ ]
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 19 tasks in the list.
+ 4.[D][ ]submit report (by: Oct 16 2022)
+ 5.[D][X]pay bills (by: Oct 31 2022)
+ 6.[E][ ]project meeting (from: Oct 14 2022 to: Oct 14 2022)
+ 7.[E][X]orientation week (from: Oct 04 2022 to: Oct 11 2022)
 ____________________________________________________________
 ____________________________________________________________
  OK, I've marked this task as not done yet:
-   [ ]
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 20 tasks in the list.
+   [E][ ]orientation week (from: Oct 04 2022 to: Oct 11 2022)
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ]read book
  2.[T][ ]return book
  3.[T][X]buy bread
- 4.[T][ ]
- 5.[T][X]
- 6.[T][ ]
- 7.[T][ ]
- 8.[T][ ]
- 9.[T][ ]
- 10.[D][ ]submit report (by: Sunday)
- 11.[D][ ]pay bills (by: end of month)
- 12.[T][ ]
- 13.[T][ ]
- 14.[E][ ]project meeting (from: Mon 2pm to: 4pm)
- 15.[E][ ]orientation week (from: 4/10/2019 to: 11/10/2019)
- 16.[T][ ]
- 17.[T][ ]
- 18.[T][ ]
- 19.[T][ ]
- 20.[T][ ]
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this task:
-   [T][ ]
- Now you have 21 tasks in the list.
+ 4.[D][ ]submit report (by: Oct 16 2022)
+ 5.[D][X]pay bills (by: Oct 31 2022)
+ 6.[E][ ]project meeting (from: Oct 14 2022 to: Oct 14 2022)
+ 7.[E][ ]orientation week (from: Oct 04 2022 to: Oct 11 2022)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
