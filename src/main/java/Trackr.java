@@ -4,38 +4,42 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Trackr {
+    private final Storage storage;
+    private ArrayList<Task> tasks;
+    private final Ui ui;
 
-    private static final String SEPARATOR_LINE =
-            "____________________________________________________________";
+    public Trackr(String filePath) {
+        this.storage = new Storage(filePath);
+        this.tasks = new ArrayList<>();
+        this.ui = new Ui();
+    }
 
-    private static ArrayList<Task> tasks = new ArrayList<>();
-    private static Storage storage = new Storage();
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        showGreeting();
+    public void run() {
+        ui.showGreeting();
         tasks = storage.load();
+
         while (true) {
-            String input = sc.nextLine();
+            String input = ui.readCommand();
             try {
                 checkInput(input);
             } catch (TrackrException e) {
-                System.out.println(SEPARATOR_LINE);
-                System.out.println(" " + e.getMessage());
-                System.out.println(SEPARATOR_LINE);
+                ui.showError(e.getMessage());
             }
         }
     }
 
-    private static void checkInput(String input) throws TrackrException {
+    public static void main(String[] args) {
+        new Trackr("data/trackr.txt").run();
+    }
+
+    private void checkInput(String input) throws TrackrException {
 
         if (input.equals("bye")) {
-            System.out.println(SEPARATOR_LINE);
-            printExit();
+            ui.showExit();
             System.exit(0);
 
         } else if (input.equals("list")) {
-            showList();
+            ui.showList(tasks);
 
         } else if (input.startsWith("mark ")) {
             markTask(input);
@@ -60,7 +64,7 @@ public class Trackr {
         }
     }
 
-    private static void handleTodo(String input) throws TrackrException {
+    private void handleTodo(String input) throws TrackrException {
         if (input.equals("todo")) {
             throw new TrackrException(
                     "The description of a todo cannot be empty.");
@@ -69,10 +73,10 @@ public class Trackr {
         String description = input.substring(5);
         tasks.add(new ToDo(description));
         storage.save(tasks);
-        showAdd();
+        ui.showAdd(tasks.get(tasks.size() - 1), tasks.size());
     }
 
-    private static void handleDeadline(String input) throws TrackrException {
+    private void handleDeadline(String input) throws TrackrException {
         if (!input.contains(" /by ")) {
             throw new TrackrException(
                     "A deadline must have a /by date.");
@@ -93,10 +97,10 @@ public class Trackr {
         }
 
         storage.save(tasks);
-        showAdd();
+        ui.showAdd(tasks.get(tasks.size() - 1), tasks.size());
     }
 
-    private static void handleEvent(String input) throws TrackrException {
+    private void handleEvent(String input) throws TrackrException {
         if (!input.contains(" /from ") || !input.contains(" /to ")) {
             throw new TrackrException(
                     "An event must have /from and /to.");
@@ -113,36 +117,10 @@ public class Trackr {
         }
 
         storage.save(tasks);
-        showAdd();
+        ui.showAdd(tasks.get(tasks.size() - 1), tasks.size());
     }
 
-    private static void showGreeting() {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Hello! I'm Trackr");
-        System.out.println(" What can I do for you?");
-        System.out.println(SEPARATOR_LINE);
-    }
-
-    private static void showAdd() {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + tasks.get(tasks.size() - 1));
-        System.out.println(" Now you have " + tasks.size()
-                + " tasks in the list.");
-        System.out.println(SEPARATOR_LINE);
-    }
-
-    private static void showList() {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Here are the tasks in your list:");
-
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(" " + (i + 1) + "." + tasks.get(i));
-        }
-
-        System.out.println(SEPARATOR_LINE);
-    }
-    private static int parseTaskIndex(String input, String errorMessage)
+    private int parseTaskIndex(String input, String errorMessage)
             throws TrackrException {
 
         int index;
@@ -160,49 +138,34 @@ public class Trackr {
     }
 
 
-    private static void markTask(String input) throws TrackrException {
+    private void markTask(String input) throws TrackrException {
         int index = parseTaskIndex(input, "Please specify a valid task number.");
 
         Task task = tasks.get(index);
         task.markAsDone();
         storage.save(tasks);
+        ui.showMark(task);
 
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Nice! I've marked this task as done:");
-        System.out.println("   " + task);
-        System.out.println(SEPARATOR_LINE);
     }
 
-    private static void unmarkTask(String input) throws TrackrException {
+    private void unmarkTask(String input) throws TrackrException {
         int index = parseTaskIndex(input, "Please specify a valid task number.");
 
         Task task = tasks.get(index);
         task.markAsNotDone();
         storage.save(tasks);
+        ui.showUnmark(task);
 
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" OK, I've marked this task as not done yet:");
-        System.out.println("   " + task);
-        System.out.println(SEPARATOR_LINE);
     }
 
-    private static void deleteTask(String input) throws TrackrException {
+    private void deleteTask(String input) throws TrackrException {
         int index = parseTaskIndex(input,
                 "Please specify a valid task number to delete.");
 
         Task removedTask = tasks.remove(index);
         storage.save(tasks);
+        ui.showDelete(removedTask, tasks.size());
 
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Noted. I've removed this task:");
-        System.out.println("   " + removedTask);
-        System.out.println(" Now you have " + tasks.size()
-                + " tasks in the list.");
-        System.out.println(SEPARATOR_LINE);
     }
 
-    private static void printExit() {
-        System.out.println(" Bye. Hope to see you again soon!");
-        System.out.println(SEPARATOR_LINE);
-    }
 }

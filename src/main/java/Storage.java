@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +9,8 @@ public class Storage {
 
     private final Path filePath;
 
-    public Storage() {
-        this.filePath = Paths.get("data", "trackr.txt");
+    public Storage(String filePath) {
+        this.filePath = Path.of(filePath);
     }
 
     public ArrayList<Task> load() {
