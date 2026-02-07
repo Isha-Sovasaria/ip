@@ -1,3 +1,5 @@
+package trackr;
+import trackr.task.Task;
 import java.util.Scanner;
 
 public class Ui {
@@ -9,7 +11,7 @@ public class Ui {
 
     public void showGreeting() {
         System.out.println(SEPARATOR_LINE);
-        System.out.println(" Hello! I'm Trackr");
+        System.out.println(" Hello! I'm trackr.Trackr");
         System.out.println(" What can I do for you?");
         System.out.println(SEPARATOR_LINE);
     }
@@ -26,7 +28,7 @@ public class Ui {
 
     public void showAdd(Task task, int taskCount) {
         System.out.println(SEPARATOR_LINE);
-        System.out.println(" Got it. I've added this task:");
+        System.out.println(" Got it. I've added this trackr.task:");
         System.out.println("   " + task);
         System.out.println(" Now you have " + taskCount
                 + " tasks in the list.");
@@ -46,21 +48,21 @@ public class Ui {
 
     public void showMark(Task task) {
         System.out.println(SEPARATOR_LINE);
-        System.out.println(" Nice! I've marked this task as done:");
+        System.out.println(" Nice! I've marked this trackr.task as done:");
         System.out.println("   " + task);
         System.out.println(SEPARATOR_LINE);
     }
 
     public void showUnmark(Task task) {
         System.out.println(SEPARATOR_LINE);
-        System.out.println(" OK, I've marked this task as not done yet:");
+        System.out.println(" OK, I've marked this trackr.task as not done yet:");
         System.out.println("   " + task);
         System.out.println(SEPARATOR_LINE);
     }
 
     public void showDelete(Task task, int taskCount) {
         System.out.println(SEPARATOR_LINE);
-        System.out.println(" Noted. I've removed this task:");
+        System.out.println(" Noted. I've removed this trackr.task:");
         System.out.println("   " + task);
         System.out.println(" Now you have " + taskCount
                 + " tasks in the list.");

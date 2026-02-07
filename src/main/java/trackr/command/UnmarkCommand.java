@@ -1,3 +1,11 @@
+package trackr.command;
+
+import trackr.task.Task;
+import trackr.task.TaskList;
+import trackr.Storage;
+import trackr.TrackrException;
+import trackr.Ui;
+
 public class UnmarkCommand extends Command {
 
     private final int index;
@@ -11,7 +19,7 @@ public class UnmarkCommand extends Command {
             throws TrackrException {
 
         if (index < 0 || index >= tasks.size()) {
-            throw new TrackrException("That task number does not exist.");
+            throw new TrackrException("That trackr.task number does not exist.");
         }
 
         Task task = tasks.get(index);

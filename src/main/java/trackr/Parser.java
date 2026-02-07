@@ -1,6 +1,18 @@
+package trackr;
+import trackr.command.AddCommand;
+import trackr.command.Command;
+import trackr.command.DeleteCommand;
+import trackr.command.ExitCommand;
+import trackr.command.ListCommand;
+import trackr.command.MarkCommand;
+import trackr.command.UnmarkCommand;
+
+import trackr.task.ToDo;
+import trackr.task.Deadline;
+import trackr.task.Event;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-
 public class Parser {
 
     public Command parse(String input) throws TrackrException {
@@ -14,15 +26,15 @@ public class Parser {
 
         } else if (input.startsWith("mark ")) {
             return new MarkCommand(parseIndex(input,
-                    "Please specify a valid task number."));
+                    "Please specify a valid trackr.task number."));
 
         } else if (input.startsWith("unmark ")) {
             return new UnmarkCommand(parseIndex(input,
-                    "Please specify a valid task number."));
+                    "Please specify a valid trackr.task number."));
 
         } else if (input.startsWith("delete ")) {
             return new DeleteCommand(parseIndex(input,
-                    "Please specify a valid task number to delete."));
+                    "Please specify a valid trackr.task number to delete."));
 
         } else if (input.equals("todo") || input.startsWith("todo ")) {
             if (input.equals("todo")) {
@@ -38,7 +50,7 @@ public class Parser {
             return parseEvent(input);
 
         } else {
-            throw new TrackrException("Sorry, I don't understand that command.");
+            throw new TrackrException("Sorry, I don't understand that trackr.command.");
         }
     }
 

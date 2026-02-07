@@ -1,3 +1,11 @@
+package trackr;
+
+
+import trackr.task.ToDo;
+import trackr.task.Deadline;
+import trackr.task.Event;
+import trackr.task.Task;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -69,7 +77,7 @@ public class Storage {
                 return e;
 
             default:
-                throw new IllegalArgumentException("Unknown task type");
+                throw new IllegalArgumentException("Unknown trackr.task type");
         }
     }
 }

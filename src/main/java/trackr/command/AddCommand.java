@@ -1,3 +1,10 @@
+package trackr.command;
+
+import trackr.task.Task;
+import trackr.task.TaskList;
+import trackr.Storage;
+import trackr.Ui;
+
 public class AddCommand extends Command {
 
     private final Task task;
