@@ -1,5 +1,7 @@
 package trackr;
 import trackr.task.Task;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -110,6 +112,22 @@ public class Ui {
         System.out.println("   " + task);
         System.out.println(" Now you have " + taskCount
                 + " tasks in the list.");
+        System.out.println(SEPARATOR_LINE);
+    }
+
+    /**
+     * Displays tasks that match a search keyword.
+     *
+     * @param tasks The list of matching tasks.
+     */
+    public void showFindResults(ArrayList<Task> tasks) {
+        System.out.println(SEPARATOR_LINE);
+        System.out.println(" Here are the matching tasks in your list:");
+
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(" " + (i + 1) + "." + tasks.get(i));
+        }
+
         System.out.println(SEPARATOR_LINE);
     }
 
