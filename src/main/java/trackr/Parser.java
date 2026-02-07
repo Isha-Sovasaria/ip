@@ -13,8 +13,20 @@ import trackr.task.Event;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+
+/**
+ * Parses user input strings and converts them into executable commands.
+ * The parser validates command formats and extracts required arguments.
+ */
 public class Parser {
 
+    /**
+     * Parses the given user input and returns the corresponding command.
+     *
+     * @param input The raw user input string.
+     * @return The command representing the user instruction.
+     * @throws TrackrException If the command is invalid or incomplete.
+     */
     public Command parse(String input) throws TrackrException {
         input = input.trim();
 
@@ -54,6 +66,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Extracts and parses the task index from commands that require an index.
+     *
+     * @param input The full user input string.
+     * @param errorMessage The error message to use if parsing fails.
+     * @return The zero-based index of the task.
+     * @throws TrackrException If the task index is missing or invalid.
+     */
     private int parseIndex(String input, String errorMessage)
             throws TrackrException {
         try {
@@ -63,6 +83,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a deadline command and creates the corresponding task.
+     *
+     * @param input The full user input string.
+     * @return The command that adds a deadline task.
+     * @throws TrackrException If the description or date is invalid.
+     */
     private Command parseDeadline(String input)
             throws TrackrException {
 
