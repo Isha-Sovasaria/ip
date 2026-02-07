@@ -24,17 +24,17 @@ public class Parser {
         } else if (input.equals("list")) {
             return new ListCommand();
 
-        } else if (input.startsWith("mark ")) {
+        } else if (input.startsWith("mark")) {
             return new MarkCommand(parseIndex(input,
-                    "Please specify a valid trackr.task number."));
+                    "Please specify a valid task number."));
 
-        } else if (input.startsWith("unmark ")) {
+        } else if (input.startsWith("unmark")) {
             return new UnmarkCommand(parseIndex(input,
-                    "Please specify a valid trackr.task number."));
+                    "Please specify a valid task number."));
 
-        } else if (input.startsWith("delete ")) {
+        } else if (input.startsWith("delete")) {
             return new DeleteCommand(parseIndex(input,
-                    "Please specify a valid trackr.task number to delete."));
+                    "Please specify a valid task number to delete."));
 
         } else if (input.equals("todo") || input.startsWith("todo ")) {
             if (input.equals("todo")) {
@@ -50,7 +50,7 @@ public class Parser {
             return parseEvent(input);
 
         } else {
-            throw new TrackrException("Sorry, I don't understand that trackr.command.");
+            throw new TrackrException("Sorry, I don't understand that command.");
         }
     }
 
