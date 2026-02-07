@@ -13,6 +13,8 @@ import trackr.task.Event;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import trackr.command.FindCommand;
+
 public class Parser {
 
     public Command parse(String input) throws TrackrException {
@@ -49,6 +51,11 @@ public class Parser {
         } else if (input.equals("event") || input.startsWith("event ")) {
             return parseEvent(input);
 
+        } else if (input.equals("find") || input.startsWith("find ")) {
+            if (input.equals("find")) {
+                throw new TrackrException("Please specify a keyword to search for.");
+            }
+            return new FindCommand(input.substring(5));
         } else {
             throw new TrackrException("Sorry, I don't understand that command.");
         }
