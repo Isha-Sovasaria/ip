@@ -1,23 +1,19 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Trackr {
     private final Storage storage;
-    private ArrayList<Task> tasks;
+    private final TaskList tasks;
     private final Ui ui;
 
     public Trackr(String filePath) {
         this.storage = new Storage(filePath);
-        this.tasks = new ArrayList<>();
+        this.tasks = new TaskList(storage.load());
         this.ui = new Ui();
     }
 
     public void run() {
         ui.showGreeting();
-        tasks = storage.load();
-
         while (true) {
             String input = ui.readCommand();
             try {
@@ -39,7 +35,7 @@ public class Trackr {
             System.exit(0);
 
         } else if (input.equals("list")) {
-            ui.showList(tasks);
+            ui.showList(tasks.getAll());
 
         } else if (input.startsWith("mark ")) {
             markTask(input);
@@ -72,7 +68,7 @@ public class Trackr {
 
         String description = input.substring(5);
         tasks.add(new ToDo(description));
-        storage.save(tasks);
+        storage.save(tasks.getAll());
         ui.showAdd(tasks.get(tasks.size() - 1), tasks.size());
     }
 
@@ -96,7 +92,7 @@ public class Trackr {
                     "Please use yyyy-mm-dd format for dates.");
         }
 
-        storage.save(tasks);
+        storage.save(tasks.getAll());
         ui.showAdd(tasks.get(tasks.size() - 1), tasks.size());
     }
 
@@ -116,7 +112,7 @@ public class Trackr {
                     "Please use yyyy-mm-dd format for dates.");
         }
 
-        storage.save(tasks);
+        storage.save(tasks.getAll());
         ui.showAdd(tasks.get(tasks.size() - 1), tasks.size());
     }
 
@@ -143,7 +139,7 @@ public class Trackr {
 
         Task task = tasks.get(index);
         task.markAsDone();
-        storage.save(tasks);
+        storage.save(tasks.getAll());
         ui.showMark(task);
 
     }
@@ -153,7 +149,7 @@ public class Trackr {
 
         Task task = tasks.get(index);
         task.markAsNotDone();
-        storage.save(tasks);
+        storage.save(tasks.getAll());
         ui.showUnmark(task);
 
     }
@@ -163,7 +159,7 @@ public class Trackr {
                 "Please specify a valid task number to delete.");
 
         Task removedTask = tasks.remove(index);
-        storage.save(tasks);
+        storage.save(tasks.getAll());
         ui.showDelete(removedTask, tasks.size());
 
     }
