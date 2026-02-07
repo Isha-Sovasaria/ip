@@ -1,17 +1,17 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Trackr {
 
-    private static final String LINE =
+    private static final String SEPARATOR_LINE =
             "____________________________________________________________";
 
     private static ArrayList<Task> tasks = new ArrayList<>();
     private static Storage storage = new Storage();
 
     public static void main(String[] args) {
-        System.out.println("Working directory: " + System.getProperty("user.dir"));
         Scanner sc = new Scanner(System.in);
         showGreeting();
         tasks = storage.load();
@@ -20,9 +20,9 @@ public class Trackr {
             try {
                 checkInput(input);
             } catch (TrackrException e) {
-                System.out.println(LINE);
+                System.out.println(SEPARATOR_LINE);
                 System.out.println(" " + e.getMessage());
-                System.out.println(LINE);
+                System.out.println(SEPARATOR_LINE);
             }
         }
     }
@@ -30,7 +30,7 @@ public class Trackr {
     private static void checkInput(String input) throws TrackrException {
 
         if (input.equals("bye")) {
-            System.out.println(LINE);
+            System.out.println(SEPARATOR_LINE);
             printExit();
             System.exit(0);
 
@@ -84,7 +84,14 @@ public class Trackr {
                     "The description of a deadline cannot be empty.");
         }
 
-        tasks.add(new Deadline(parts[0], LocalDate.parse(parts[1])));
+        try {
+            LocalDate date = LocalDate.parse(parts[1]);
+            tasks.add(new Deadline(parts[0], date));
+        } catch (DateTimeParseException e) {
+            throw new TrackrException(
+                    "Please use yyyy-mm-dd format for dates.");
+        }
+
         storage.save(tasks);
         showAdd();
     }
@@ -96,112 +103,106 @@ public class Trackr {
         }
 
         String[] parts = input.substring(6).split(" /from | /to ");
-        tasks.add(new Event(parts[0], LocalDate.parse(parts[1]), LocalDate.parse(parts[2])));
+        try {
+            LocalDate from = LocalDate.parse(parts[1]);
+            LocalDate to = LocalDate.parse(parts[2]);
+            tasks.add(new Event(parts[0], from, to));
+        } catch (DateTimeParseException e) {
+            throw new TrackrException(
+                    "Please use yyyy-mm-dd format for dates.");
+        }
+
         storage.save(tasks);
         showAdd();
     }
 
     private static void showGreeting() {
-        System.out.println(LINE);
+        System.out.println(SEPARATOR_LINE);
         System.out.println(" Hello! I'm Trackr");
         System.out.println(" What can I do for you?");
-        System.out.println(LINE);
+        System.out.println(SEPARATOR_LINE);
     }
 
     private static void showAdd() {
-        System.out.println(LINE);
+        System.out.println(SEPARATOR_LINE);
         System.out.println(" Got it. I've added this task:");
         System.out.println("   " + tasks.get(tasks.size() - 1));
         System.out.println(" Now you have " + tasks.size()
                 + " tasks in the list.");
-        System.out.println(LINE);
+        System.out.println(SEPARATOR_LINE);
     }
 
     private static void showList() {
-        System.out.println(LINE);
+        System.out.println(SEPARATOR_LINE);
         System.out.println(" Here are the tasks in your list:");
 
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println(" " + (i + 1) + "." + tasks.get(i));
         }
 
-        System.out.println(LINE);
+        System.out.println(SEPARATOR_LINE);
     }
+    private static int parseTaskIndex(String input, String errorMessage)
+            throws TrackrException {
 
-    private static void markTask(String input) throws TrackrException {
         int index;
-
         try {
             index = Integer.parseInt(input.split(" ")[1]) - 1;
         } catch (Exception e) {
-            throw new TrackrException(
-                    "Please specify a valid task number.");
+            throw new TrackrException(errorMessage);
         }
 
         if (index < 0 || index >= tasks.size()) {
-            throw new TrackrException(
-                    "That task number does not exist.");
+            throw new TrackrException("That task number does not exist.");
         }
+
+        return index;
+    }
+
+
+    private static void markTask(String input) throws TrackrException {
+        int index = parseTaskIndex(input, "Please specify a valid task number.");
 
         Task task = tasks.get(index);
         task.markAsDone();
         storage.save(tasks);
-        System.out.println(LINE);
+
+        System.out.println(SEPARATOR_LINE);
         System.out.println(" Nice! I've marked this task as done:");
         System.out.println("   " + task);
-        System.out.println(LINE);
+        System.out.println(SEPARATOR_LINE);
     }
 
     private static void unmarkTask(String input) throws TrackrException {
-        int index;
-
-        try {
-            index = Integer.parseInt(input.split(" ")[1]) - 1;
-        } catch (Exception e) {
-            throw new TrackrException(
-                    "Please specify a valid task number.");
-        }
-
-        if (index < 0 || index >= tasks.size()) {
-            throw new TrackrException(
-                    "That task number does not exist.");
-        }
+        int index = parseTaskIndex(input, "Please specify a valid task number.");
 
         Task task = tasks.get(index);
         task.markAsNotDone();
         storage.save(tasks);
-        System.out.println(LINE);
+
+        System.out.println(SEPARATOR_LINE);
         System.out.println(" OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
-        System.out.println(LINE);
+        System.out.println(SEPARATOR_LINE);
     }
+
     private static void deleteTask(String input) throws TrackrException {
-        int index;
-
-        try {
-            index = Integer.parseInt(input.split(" ")[1]) - 1;
-        } catch (Exception e) {
-            throw new TrackrException(
-                    "Please specify a valid task number to delete.");
-        }
-
-        if (index < 0 || index >= tasks.size()) {
-            throw new TrackrException(
-                    "That task number does not exist.");
-        }
+        int index = parseTaskIndex(input,
+                "Please specify a valid task number to delete.");
 
         Task removedTask = tasks.remove(index);
         storage.save(tasks);
-        System.out.println(LINE);
+
+        System.out.println(SEPARATOR_LINE);
         System.out.println(" Noted. I've removed this task:");
         System.out.println("   " + removedTask);
         System.out.println(" Now you have " + tasks.size()
                 + " tasks in the list.");
-        System.out.println(LINE);
+        System.out.println(SEPARATOR_LINE);
     }
 
     private static void printExit() {
         System.out.println(" Bye. Hope to see you again soon!");
-        System.out.println(LINE);
+        System.out.println(SEPARATOR_LINE);
     }
 }

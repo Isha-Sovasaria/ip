@@ -1,4 +1,3 @@
-Working directory: /Users/isha/ip/text-ui-test
 ____________________________________________________________
  Hello! I'm Trackr
  What can I do for you?

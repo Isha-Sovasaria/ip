@@ -11,7 +11,7 @@ public class Storage {
     private final Path filePath;
 
     public Storage() {
-        this.filePath = Paths.get("data", "bytey.txt");
+        this.filePath = Paths.get("data", "trackr.txt");
     }
 
     public ArrayList<Task> load() {
