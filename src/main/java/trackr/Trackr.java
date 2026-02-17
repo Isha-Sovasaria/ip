@@ -34,8 +34,8 @@ public class Trackr {
             try {
                 String input = ui.readCommand();
                 Command command = parser.parse(input);
-                command.execute(tasks, ui, storage);
-
+                String response=command.execute(tasks, ui, storage);
+                ui.showMessage(response);
                 if (command.isExit()) {
                     System.exit(0);
                 }
@@ -53,6 +53,26 @@ public class Trackr {
     public static void main(String[] args) {
         new Trackr("data/trackr.txt").run();
     }
+
+    /**
+     * Generates a response for the user's input (for GUI).
+     */
+    public String getResponse(String input) {
+        try {
+            Command command = parser.parse(input);
+            String result = command.execute(tasks, ui, storage);
+
+            if (command.isExit()) {
+                return "Bye! Hope to see you again soon!";
+            }
+
+            return result;
+
+        } catch (TrackrException e) {
+            return e.getMessage();
+        }
+    }
+
 }
 
 

@@ -1,6 +1,7 @@
 package trackr.command;
 
 import trackr.Storage;
+import trackr.TrackrException;
 import trackr.Ui;
 import trackr.task.Task;
 import trackr.task.TaskList;
@@ -14,18 +15,16 @@ public class FindCommand extends Command {
 
     private final String keyword;
 
-    /**
-     * Creates a find command with the given keyword.
-     *
-     * @param keyword The keyword to search for.
-     */
     public FindCommand(String keyword) {
         this.keyword = keyword;
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage)
+            throws TrackrException {
+
         ArrayList<Task> matches = tasks.find(keyword);
-        ui.showFindResults(matches);
+
+        return ui.formatFindResults(matches);
     }
 }

@@ -15,15 +15,16 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws TrackrException {
 
         if (index < 0 || index >= tasks.size()) {
-            throw new TrackrException("That trackr.task number does not exist.");
+            throw new TrackrException("That task number does not exist.");
         }
 
         Task removedTask = tasks.remove(index);
         storage.save(tasks.getAll());
-        ui.showDelete(removedTask, tasks.size());
+
+        return ui.formatDelete(removedTask, tasks.size());
     }
 }

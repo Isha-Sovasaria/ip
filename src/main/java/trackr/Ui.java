@@ -1,12 +1,12 @@
 package trackr;
+
 import trackr.task.Task;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Handles all interactions with the user.
- * Responsible for displaying messages and reading user input.
+ * Handles formatting and console interactions.
  */
 public class Ui {
 
@@ -15,127 +15,108 @@ public class Ui {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    /**
-     * Displays the greeting message when the application starts.
-     */
+    /* =======================
+       Console-only methods
+       ======================= */
+
     public void showGreeting() {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Hello! I'm trackr.Trackr");
-        System.out.println(" What can I do for you?");
-        System.out.println(SEPARATOR_LINE);
+        System.out.println(formatGreeting());
     }
 
-    /**
-     * Reads a command entered by the user.
-     *
-     * @return The user input string.
-     */
     public String readCommand() {
         return scanner.nextLine();
     }
 
-    /**
-     * Displays an error message to the user.
-     *
-     * @param message The error message to be displayed.
-     */
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
+
     public void showError(String message) {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" " + message);
-        System.out.println(SEPARATOR_LINE);
+        System.out.println(formatError(message));
     }
 
-    /**
-     * Displays a confirmation message after adding a task.
-     *
-     * @param task The task that was added.
-     * @param taskCount The total number of tasks in the list.
-     */
-    public void showAdd(Task task, int taskCount) {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Got it. I've added this trackr.task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + taskCount
-                + " tasks in the list.");
-        System.out.println(SEPARATOR_LINE);
-    }
-
-    /**
-     * Displays the list of tasks to the user.
-     *
-     * @param tasks The list of tasks to be displayed.
-     */
-    public void showList(java.util.ArrayList<Task> tasks) {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Here are the tasks in your list:");
-
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(" " + (i + 1) + "." + tasks.get(i));
-        }
-
-        System.out.println(SEPARATOR_LINE);
-    }
-
-    /**
-     * Displays a confirmation message after marking a task as done.
-     *
-     * @param task The task that was marked as done.
-     */
-    public void showMark(Task task) {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Nice! I've marked this trackr.task as done:");
-        System.out.println("   " + task);
-        System.out.println(SEPARATOR_LINE);
-    }
-
-    /**
-     * Displays a confirmation message after unmarking a task.
-     *
-     * @param task The task that was marked as not done.
-     */
-    public void showUnmark(Task task) {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" OK, I've marked this trackr.task as not done yet:");
-        System.out.println("   " + task);
-        System.out.println(SEPARATOR_LINE);
-    }
-
-    /**
-     * Displays a confirmation message after deleting a task.
-     *
-     * @param task The task that was removed.
-     * @param taskCount The remaining number of tasks in the list.
-     */
-    public void showDelete(Task task, int taskCount) {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Noted. I've removed this trackr.task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + taskCount
-                + " tasks in the list.");
-        System.out.println(SEPARATOR_LINE);
-    }
-
-    /**
-     * Displays tasks that match a search keyword.
-     *
-     * @param tasks The list of matching tasks.
-     */
-    public void showFindResults(ArrayList<Task> tasks) {
-        System.out.println(SEPARATOR_LINE);
-        System.out.println(" Here are the matching tasks in your list:");
-
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(" " + (i + 1) + "." + tasks.get(i));
-        }
-
-        System.out.println(SEPARATOR_LINE);
-    }
-
-    /**
-     * Displays the exit message when the application terminates.
-     */
     public void showExit() {
-        System.out.println(" Bye. Hope to see you again soon!");
-        System.out.println(SEPARATOR_LINE);
+        System.out.println(formatExit());
+    }
+
+    /* =======================
+       Formatting methods
+       (used by commands + GUI)
+       ======================= */
+
+    public String formatGreeting() {
+        return SEPARATOR_LINE + "\n"
+                + " Hello! I'm Trackr\n"
+                + " What can I do for you?\n"
+                + SEPARATOR_LINE;
+    }
+
+    public String formatError(String message) {
+        return SEPARATOR_LINE + "\n"
+                + " " + message + "\n"
+                + SEPARATOR_LINE;
+    }
+
+    public String formatAdd(Task task, int taskCount) {
+        return SEPARATOR_LINE + "\n"
+                + " Got it. I've added this task:\n"
+                + "   " + task + "\n"
+                + " Now you have " + taskCount + " tasks in the list.\n"
+                + SEPARATOR_LINE;
+    }
+
+    public String formatList(ArrayList<Task> tasks) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(SEPARATOR_LINE).append("\n");
+        sb.append(" Here are the tasks in your list:\n");
+
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append(" ").append(i + 1).append(".")
+                    .append(tasks.get(i)).append("\n");
+        }
+
+        sb.append(SEPARATOR_LINE);
+        return sb.toString();
+    }
+
+    public String formatMark(Task task) {
+        return SEPARATOR_LINE + "\n"
+                + " Nice! I've marked this task as done:\n"
+                + "   " + task + "\n"
+                + SEPARATOR_LINE;
+    }
+
+    public String formatUnmark(Task task) {
+        return SEPARATOR_LINE + "\n"
+                + " OK, I've marked this task as not done yet:\n"
+                + "   " + task + "\n"
+                + SEPARATOR_LINE;
+    }
+
+    public String formatDelete(Task task, int taskCount) {
+        return SEPARATOR_LINE + "\n"
+                + " Noted. I've removed this task:\n"
+                + "   " + task + "\n"
+                + " Now you have " + taskCount + " tasks in the list.\n"
+                + SEPARATOR_LINE;
+    }
+
+    public String formatFindResults(ArrayList<Task> tasks) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(SEPARATOR_LINE).append("\n");
+        sb.append(" Here are the matching tasks in your list:\n");
+
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append(" ").append(i + 1).append(".")
+                    .append(tasks.get(i)).append("\n");
+        }
+
+        sb.append(SEPARATOR_LINE);
+        return sb.toString();
+    }
+
+    public String formatExit() {
+        return " Bye. Hope to see you again soon!\n"
+                + SEPARATOR_LINE;
     }
 }
