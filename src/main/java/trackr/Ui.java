@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class Ui {
 
-    private static final String SEPARATOR_LINE =
+    public static final String SEPARATOR_LINE =
             "____________________________________________________________";
 
     private final Scanner scanner = new Scanner(System.in);
