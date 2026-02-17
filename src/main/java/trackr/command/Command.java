@@ -1,31 +1,29 @@
 package trackr.command;
 
+import trackr.Ui;
 import trackr.task.TaskList;
 import trackr.Storage;
 import trackr.TrackrException;
-import trackr.Ui;
 
 /**
  * Represents an executable user command.
- * All specific commands extend this class and implement the execution logic.
  */
 public abstract class Command {
 
     /**
-     * Executes the command using the given task list, user interface, and storage.
+     * Executes the command and returns the result message.
      *
-     * @param tasks The task list to operate on.
-     * @param ui The user interface used to display messages.
+     * @param tasks   The task list to operate on.
+     * @param ui
      * @param storage The storage used to persist task data.
-     * @throws TrackrException If an error occurs during command execution.
+     * @return The result message to be shown to the user.
+     * @throws TrackrException If an error occurs.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage)
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage)
             throws TrackrException;
 
     /**
      * Indicates whether this command should terminate the application.
-     *
-     * @return True if the command is an exit command, otherwise false.
      */
     public boolean isExit() {
         return false;

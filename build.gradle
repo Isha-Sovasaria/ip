@@ -42,7 +42,7 @@ test {
 }
 
 application {
-    mainClass.set("trackr.Trackr")
+    mainClass.set("trackr.Launcher")
 }
 
 shadowJar {
