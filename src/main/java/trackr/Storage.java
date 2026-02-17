@@ -48,6 +48,8 @@ public class Storage {
 
             List<String> lines = Files.readAllLines(filePath);
             for (String line : lines) {
+                assert line != null : "File should not contain null lines.";
+                assert !line.isBlank() : "File should not contain blank lines.";
                 tasks.add(parseTask(line));
             }
 
@@ -71,6 +73,7 @@ public class Storage {
         }
 
         try {
+            assert filePath != null : "File path should be initialized.";
             Files.write(filePath, lines);
         } catch (IOException e) {
             System.out.println("Error saving data.");
