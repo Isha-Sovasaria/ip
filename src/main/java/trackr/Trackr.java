@@ -20,6 +20,7 @@ public class Trackr {
     public Trackr(String filePath) {
         this.storage = new Storage(filePath);
         this.tasks = new TaskList(storage.load());
+        assert tasks != null : "Storage.load() must never return null.";
         this.ui = new Ui();
         this.parser= new Parser();
     }
@@ -34,6 +35,7 @@ public class Trackr {
             try {
                 String input = ui.readCommand();
                 Command command = parser.parse(input);
+                assert command != null : "Parser must always return a Command.";
                 String response=command.execute(tasks, ui, storage);
                 ui.showMessage(response);
                 if (command.isExit()) {
