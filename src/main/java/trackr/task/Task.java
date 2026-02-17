@@ -20,6 +20,11 @@ public class Task {
         this.isDone = false;
     }
 
+    public void setDescription(String description) {
+        assert description != null : "Description cannot be null.";
+        this.description = description;
+    }
+
     /**
      * Returns the status icon of the task.
      *

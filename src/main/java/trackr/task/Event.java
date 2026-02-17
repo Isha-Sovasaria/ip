@@ -24,6 +24,17 @@ public class Event extends Task {
         this.to = to;
     }
 
+    public void setFrom(LocalDate from) {
+        assert from != null : "From date cannot be null.";
+        this.from = from;
+    }
+
+    public void setTo(LocalDate to) {
+        assert to != null : "To date cannot be null.";
+        this.to = to;
+    }
+
+
     /**
      * Formats a date into a readable string representation.
      *
