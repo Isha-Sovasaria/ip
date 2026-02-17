@@ -7,6 +7,7 @@ import trackr.command.ListCommand;
 import trackr.command.MarkCommand;
 import trackr.command.UnmarkCommand;
 
+import trackr.command.UpdateCommand;
 import trackr.task.ToDo;
 import trackr.task.Deadline;
 import trackr.task.Event;
@@ -67,7 +68,19 @@ public class Parser {
                 throw new TrackrException("Please specify a keyword to search for.");
             }
             return new FindCommand(input.substring(5));
-        } else {
+        } else if (input.startsWith("update ")) {
+
+            String[] parts = input.split(" ", 3);
+
+            if (parts.length < 3) {
+                throw new TrackrException("Invalid update format.");
+            }
+
+            int index = Integer.parseInt(parts[1]) - 1;
+            String updatePart = parts[2];
+
+            return new UpdateCommand(index, updatePart);
+        }else {
             throw new TrackrException("Sorry, I don't understand that command.");
         }
     }
