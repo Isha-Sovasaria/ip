@@ -29,11 +29,16 @@ public class MainWindow extends AnchorPane {
 
     private Trackr trackr;
 
-    private final Image userImage =
-            new Image(this.getClass().getResourceAsStream("/images/user.jpg"));
+    private final Image userImage = loadImage("/images/user.jpg");
+    private final Image trackrImage = loadImage("/images/trackr.jpg");
 
-    private final Image trackrImage =
-            new Image(this.getClass().getResourceAsStream("/images/trackr.jpg"));
+    private Image loadImage(String path) {
+        try (var stream = getClass().getResourceAsStream(path)) {
+            return stream != null ? new Image(stream) : null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @FXML
     public void initialize() {
