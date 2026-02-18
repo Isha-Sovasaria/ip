@@ -30,7 +30,7 @@ public class MainWindow extends AnchorPane {
     private Trackr trackr;
 
     private final Image userImage = loadImage("/images/user.jpg");
-    private final Image trackrImage = loadImage("/images/trackr.jpg");
+    private final Image trackrImage = loadImage("/images/Trackr.jpg");
 
     private Image loadImage(String path) {
         try (var stream = getClass().getResourceAsStream(path)) {

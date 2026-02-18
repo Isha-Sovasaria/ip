@@ -27,6 +27,7 @@ public class Parser {
     private static final String COMMAND_MARK = "mark";
     private static final String COMMAND_UNMARK = "unmark";
     private static final String COMMAND_DELETE = "delete";
+    private static final String COMMAND_UPDATE = "update";
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_EVENT = "event";
@@ -56,6 +57,9 @@ public class Parser {
         }
         if (input.startsWith(COMMAND_DELETE)) {
             return new DeleteCommand(parseIndex(input, "Please specify a valid task number to delete."));
+        }
+        if (input.startsWith(COMMAND_UPDATE)) {
+            return parseUpdateCommand(input);
         }
         if (input.equals(COMMAND_TODO) || input.startsWith(COMMAND_TODO + " ")) {
             return parseTodoCommand(input);
@@ -87,6 +91,24 @@ public class Parser {
         }
         String keyword = input.substring(COMMAND_FIND.length() + 1);
         return new FindCommand(keyword);
+    }
+
+    private Command parseUpdateCommand(String input) throws TrackrException {
+        String rest = input.substring(COMMAND_UPDATE.length()).trim();
+        if (rest.isEmpty()) {
+            throw new TrackrException("Please specify a task number and update field (e.g. update 1 /desc new description).");
+        }
+        String[] parts = rest.split(" ", 2);
+        if (parts.length < 2) {
+            throw new TrackrException("Please specify an update field: /desc, /by, or /from ... /to");
+        }
+        try {
+            int index = Integer.parseInt(parts[0]) - 1;
+            String updatePart = parts[1];
+            return new UpdateCommand(index, updatePart);
+        } catch (NumberFormatException e) {
+            throw new TrackrException("Please specify a valid task number.");
+        }
     }
 
     /**
