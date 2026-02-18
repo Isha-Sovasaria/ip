@@ -37,24 +37,32 @@ public class Storage {
      * @return A list of tasks loaded from the file.
      */
     public ArrayList<Task> load() {
-        ArrayList<Task> tasks = new ArrayList<>();
-
         try {
-            if (!Files.exists(filePath)) {
-                Files.createDirectories(filePath.getParent());
-                Files.createFile(filePath);
-                return tasks; // empty list
-            }
-
-            List<String> lines = Files.readAllLines(filePath);
-            for (String line : lines) {
-                tasks.add(parseTask(line));
-            }
-
+            ensureFileExists();
+            List<String> lines = readAllLines();
+            return parseLinesIntoTasks(lines);
         } catch (IOException e) {
             System.out.println("Error loading saved data.");
+            return new ArrayList<>();
         }
+    }
 
+    private void ensureFileExists() throws IOException {
+        if (!Files.exists(filePath)) {
+            Files.createDirectories(filePath.getParent());
+            Files.createFile(filePath);
+        }
+    }
+
+    private List<String> readAllLines() throws IOException {
+        return Files.readAllLines(filePath);
+    }
+
+    private ArrayList<Task> parseLinesIntoTasks(List<String> lines) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (String line : lines) {
+            tasks.add(parseTask(line));
+        }
         return tasks;
     }
 
@@ -86,25 +94,25 @@ public class Storage {
      */
     private Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
+        Task task;
 
         switch (parts[0]) {
             case "T":
-                ToDo t = new ToDo(parts[2]);
-                if (parts[1].equals("1")) t.markAsDone();
-                return t;
-
+                task = new ToDo(parts[2]);
+                break;
             case "D":
-                Deadline d = new Deadline(parts[2], LocalDate.parse(parts[3]));
-                if (parts[1].equals("1")) d.markAsDone();
-                return d;
-
+                task = new Deadline(parts[2], LocalDate.parse(parts[3]));
+                break;
             case "E":
-                Event e = new Event(parts[2], LocalDate.parse(parts[3]), LocalDate.parse(parts[4]));
-                if (parts[1].equals("1")) e.markAsDone();
-                return e;
-
+                task = new Event(parts[2], LocalDate.parse(parts[3]), LocalDate.parse(parts[4]));
+                break;
             default:
                 throw new IllegalArgumentException("Unknown trackr.task type");
         }
+
+        if (parts[1].equals("1")) {
+            task.markAsDone();
+        }
+        return task;
     }
 }

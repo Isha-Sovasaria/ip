@@ -18,9 +18,7 @@ public class MarkCommand extends Command {
     public String execute(TaskList tasks, Ui ui, Storage storage)
             throws TrackrException {
 
-        if (index < 0 || index >= tasks.size()) {
-            throw new TrackrException("That task number does not exist.");
-        }
+        tasks.validateIndex(index);
 
         Task task = tasks.get(index);
         task.markAsDone();

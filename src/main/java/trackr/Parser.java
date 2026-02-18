@@ -22,6 +22,16 @@ import trackr.command.FindCommand;
  */
 public class Parser {
 
+    private static final String COMMAND_BYE = "bye";
+    private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_MARK = "mark";
+    private static final String COMMAND_UNMARK = "unmark";
+    private static final String COMMAND_DELETE = "delete";
+    private static final String COMMAND_TODO = "todo";
+    private static final String COMMAND_DEADLINE = "deadline";
+    private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_FIND = "find";
+
     /**
      * Parses the given user input and returns the corresponding command.
      *
@@ -32,57 +42,51 @@ public class Parser {
     public Command parse(String input) throws TrackrException {
         input = input.trim();
 
-        if (input.equals("bye")) {
+        if (input.equals(COMMAND_BYE)) {
             return new ExitCommand();
-
-        } else if (input.equals("list")) {
-            return new ListCommand();
-
-        } else if (input.startsWith("mark")) {
-            return new MarkCommand(parseIndex(input,
-                    "Please specify a valid task number."));
-
-        } else if (input.startsWith("unmark")) {
-            return new UnmarkCommand(parseIndex(input,
-                    "Please specify a valid task number."));
-
-        } else if (input.startsWith("delete")) {
-            return new DeleteCommand(parseIndex(input,
-                    "Please specify a valid task number to delete."));
-
-        } else if (input.equals("todo") || input.startsWith("todo ")) {
-            if (input.equals("todo")) {
-                throw new TrackrException(
-                        "The description of a todo cannot be empty.");
-            }
-            return new AddCommand(new ToDo(input.substring(5)));
-
-        } else if (input.equals("deadline") || input.startsWith("deadline ")) {
-            return parseDeadline(input);
-
-        } else if (input.equals("event") || input.startsWith("event ")) {
-            return parseEvent(input);
-
-        } else if (input.equals("find") || input.startsWith("find ")) {
-            if (input.equals("find")) {
-                throw new TrackrException("Please specify a keyword to search for.");
-            }
-            return new FindCommand(input.substring(5));
-        } else if (input.startsWith("update ")) {
-
-            String[] parts = input.split(" ", 3);
-
-            if (parts.length < 3) {
-                throw new TrackrException("Invalid update format.");
-            }
-
-            int index = Integer.parseInt(parts[1]) - 1;
-            String updatePart = parts[2];
-
-            return new UpdateCommand(index, updatePart);
-        }else {
-            throw new TrackrException("Sorry, I don't understand that command.");
         }
+        if (input.equals(COMMAND_LIST)) {
+            return new ListCommand();
+        }
+        if (input.startsWith(COMMAND_MARK)) {
+            return new MarkCommand(parseIndex(input, "Please specify a valid task number."));
+        }
+        if (input.startsWith(COMMAND_UNMARK)) {
+            return new UnmarkCommand(parseIndex(input, "Please specify a valid task number."));
+        }
+        if (input.startsWith(COMMAND_DELETE)) {
+            return new DeleteCommand(parseIndex(input, "Please specify a valid task number to delete."));
+        }
+        if (input.equals(COMMAND_TODO) || input.startsWith(COMMAND_TODO + " ")) {
+            return parseTodoCommand(input);
+        }
+        if (input.equals(COMMAND_DEADLINE) || input.startsWith(COMMAND_DEADLINE + " ")) {
+            return parseDeadline(input);
+        }
+        if (input.equals(COMMAND_EVENT) || input.startsWith(COMMAND_EVENT + " ")) {
+            return parseEvent(input);
+        }
+        if (input.equals(COMMAND_FIND) || input.startsWith(COMMAND_FIND + " ")) {
+            return parseFindCommand(input);
+        }
+
+        throw new TrackrException("Sorry, I don't understand that command.");
+    }
+
+    private Command parseTodoCommand(String input) throws TrackrException {
+        if (input.equals(COMMAND_TODO)) {
+            throw new TrackrException("The description of a todo cannot be empty.");
+        }
+        String description = input.substring(COMMAND_TODO.length() + 1);
+        return new AddCommand(new ToDo(description));
+    }
+
+    private Command parseFindCommand(String input) throws TrackrException {
+        if (input.equals(COMMAND_FIND)) {
+            throw new TrackrException("Please specify a keyword to search for.");
+        }
+        String keyword = input.substring(COMMAND_FIND.length() + 1);
+        return new FindCommand(keyword);
     }
 
     /**
@@ -116,7 +120,7 @@ public class Parser {
             throw new TrackrException("A deadline must have a /by date.");
         }
 
-        String[] parts = input.substring(9).split(" /by ");
+        String[] parts = input.substring(COMMAND_DEADLINE.length() + 1).split(" /by ");
         if (parts[0].isEmpty()) {
             throw new TrackrException(
                     "The description of a deadline cannot be empty.");
@@ -138,7 +142,7 @@ public class Parser {
             throw new TrackrException("An event must have /from and /to.");
         }
 
-        String[] parts = input.substring(6).split(" /from | /to ");
+        String[] parts = input.substring(COMMAND_EVENT.length() + 1).split(" /from | /to ");
 
         try {
             LocalDate from = LocalDate.parse(parts[1]);
