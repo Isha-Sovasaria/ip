@@ -34,17 +34,16 @@ public class Event extends Task {
         this.to = to;
     }
 
-
     /**
      * Formats a date into a readable string representation.
      *
-     * @param x The date to be formatted.
+     * @param date The date to be formatted.
      * @return The formatted date string.
      */
-    private String formatDate(LocalDate x) {
+    private String formatDate(LocalDate date) {
         DateTimeFormatter formatter =
                 DateTimeFormatter.ofPattern("MMM dd yyyy");
-        return x.format(formatter);
+        return date.format(formatter);
     }
 
     /**

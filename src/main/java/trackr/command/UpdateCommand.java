@@ -1,7 +1,6 @@
 package trackr.command;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import trackr.Storage;
 import trackr.TrackrException;
@@ -64,5 +63,4 @@ public class UpdateCommand extends Command {
         storage.save(tasks.getAll());
         return "Update succesful";
     }
-
 }

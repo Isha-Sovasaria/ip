@@ -1,7 +1,6 @@
 package trackr;
 
 import javafx.application.Application;
-import trackr.Main;
 
 /**
  * A launcher class to workaround classpath issues.
