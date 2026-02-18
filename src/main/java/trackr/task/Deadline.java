@@ -21,6 +21,11 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    public void setBy(LocalDate by) {
+        assert by != null : "Deadline date cannot be null.";
+        this.by = by;
+    }
+
     /**
      * Formats the due date into a readable string representation.
      *

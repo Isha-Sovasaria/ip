@@ -7,6 +7,7 @@ import trackr.command.ListCommand;
 import trackr.command.MarkCommand;
 import trackr.command.UnmarkCommand;
 
+import trackr.command.UpdateCommand;
 import trackr.task.ToDo;
 import trackr.task.Deadline;
 import trackr.task.Event;
