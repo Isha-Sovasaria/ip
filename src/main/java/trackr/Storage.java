@@ -1,6 +1,5 @@
 package trackr;
 
-
 import trackr.task.ToDo;
 import trackr.task.Deadline;
 import trackr.task.Event;
@@ -107,7 +106,7 @@ public class Storage {
                 task = new Event(parts[2], LocalDate.parse(parts[3]), LocalDate.parse(parts[4]));
                 break;
             default:
-                throw new IllegalArgumentException("Unknown trackr.task type");
+                throw new IllegalArgumentException("Unknown task type");
         }
 
         if (parts[1].equals("1")) {

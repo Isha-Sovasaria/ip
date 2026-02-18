@@ -1,20 +1,20 @@
 package trackr;
+
 import trackr.command.AddCommand;
 import trackr.command.Command;
 import trackr.command.DeleteCommand;
 import trackr.command.ExitCommand;
+import trackr.command.FindCommand;
 import trackr.command.ListCommand;
 import trackr.command.MarkCommand;
 import trackr.command.UnmarkCommand;
-
 import trackr.command.UpdateCommand;
-import trackr.task.ToDo;
 import trackr.task.Deadline;
 import trackr.task.Event;
+import trackr.task.ToDo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import trackr.command.FindCommand;
 
 /**
  * Parses user input strings and converts them into executable commands.

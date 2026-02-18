@@ -1,5 +1,5 @@
 T | 0 | read
-T | 0 | new description
+T | 0 | new
 T | 0 | eat apple
 T | 0 | read
 T | 0 | book

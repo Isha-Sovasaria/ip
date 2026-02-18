@@ -1,4 +1,5 @@
 package trackr;
+
 import trackr.command.Command;
 import trackr.task.TaskList;
 
@@ -22,7 +23,7 @@ public class Trackr {
         this.tasks = new TaskList(storage.load());
         assert tasks != null : "Storage.load() must never return null.";
         this.ui = new Ui();
-        this.parser= new Parser();
+        this.parser = new Parser();
     }
 
     /**
@@ -36,7 +37,7 @@ public class Trackr {
                 String input = ui.readCommand();
                 Command command = parser.parse(input);
                 assert command != null : "Parser must always return a Command.";
-                String response=command.execute(tasks, ui, storage);
+                String response = command.execute(tasks, ui, storage);
                 ui.showMessage(response);
                 if (command.isExit()) {
                     System.exit(0);
@@ -74,12 +75,7 @@ public class Trackr {
             return e.getMessage();
         }
     }
-
 }
-
-
-
-
 
 
 
