@@ -21,3 +21,7 @@ text-ui-test/EXPECTED-UNIX.TXT
 
 # Text UI test output
 text-ui-test/ACTUAL.TXT
+
+# generated data files
+data/trackr.txt
+text-ui-test/data/trackr.txt

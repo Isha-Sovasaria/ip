@@ -12,13 +12,9 @@ Trackr can be used in two ways:
 
 ### Running the GUI
 
-1. **Using Gradle** (recommended):
+**Using the JAR file** :
    ```
-   ./gradlew run
-   ```
-2. **Using the JAR file** (after building with `./gradlew build`):
-   ```
-   java -jar build/libs/trackr.jar
+   java -jar trackr.jar
    ```
 
 A window will open. Type your message in the text box at the bottom and press Enter or click Send.
@@ -27,9 +23,9 @@ A window will open. Type your message in the text box at the bottom and press En
 
 ### Running the CLI
 
-1. **Using the JAR file** (after building with `./gradlew build`):
+**Using the JAR file** :
    ```
-   java -cp build/libs/trackr.jar trackr.Trackr
+   java -cp trackr.jar trackr.Trackr
    ```
 
 You will see a greeting in the terminal. Type commands and press Enter after each command.
@@ -40,13 +36,18 @@ You will see a greeting in the terminal. Type commands and press Enter after eac
 
 ### Notes about the command format
 
-- Words in `UPPER_CASE` are parameters to be supplied by you.
-  - e.g. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter, such as `todo Buy groceries`.
-- Dates must be in **yyyy-mm-dd** format (e.g. `2025-03-15`).
-- The `INDEX` is the task number shown in the list (1, 2, 3, …​).
-- Extraneous parameters for commands that do not take them (such as `list` and `bye`) will be ignored.
-  - e.g. `list 123` is interpreted as `list`.
-- If you are using a PDF version of this document, take care when copying multi-line commands, as spaces around line breaks may be lost.
+- Words in UPPER_CASE are parameters to be supplied by you.
+- e.g. in todo DESCRIPTION, DESCRIPTION is a parameter such as todo Buy groceries.
+-  Dates must be in yyyy-mm-dd format (e.g. 2025-03-15).
+- INDEX refers to the task number shown in the list (1, 2, 3, …).
+-  Commands must follow the specified format exactly.
+  e.g. mark1 is invalid; use mark 1.
+-  Required keywords such as /by, /from, and /to must be included where specified.
+-  If required fields are missing (e.g. missing description or date), Trackr will display a specific error message.
+-  Commands are case-sensitive. Use lowercase (e.g. todo, not Todo).
+- Extraneous parameters for commands that do not take them (such as list and bye) are ignored.
+ e.g. list 123 is interpreted as list. 
+- If copying multi-line commands, ensure spaces are preserved.
 
 ---
 

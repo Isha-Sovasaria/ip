@@ -35,6 +35,7 @@ public class Trackr {
         while (true) {
             try {
                 String input = ui.readCommand();
+                assert input != null : "UI should never return null input.";
                 Command command = parser.parse(input);
                 assert command != null : "Parser must always return a Command.";
                 String response = command.execute(tasks, ui, storage);

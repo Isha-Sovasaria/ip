@@ -12,6 +12,12 @@ then
     rm ACTUAL.TXT
 fi
 
+# delete existing data file to ensure clean test
+if [ -e "./data/trackr.txt" ]
+then
+    rm ./data/trackr.txt
+fi
+
 # compile ALL java files under src/main/java (including packages)
 if ! javac -Xlint:none -d ../bin $(find ../src/main/java -name "*.java")
 then

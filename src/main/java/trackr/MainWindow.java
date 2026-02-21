@@ -9,6 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+import javafx.application.Platform;
 
 /**
  * Controller for the main GUI.
@@ -66,5 +69,12 @@ public class MainWindow extends AnchorPane {
         );
 
         userInput.clear();
+
+        // Close GUI if user typed "bye"
+        if (input.trim().equals("bye")) {
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(event -> Platform.exit());
+            pause.play();
+        }
     }
 }

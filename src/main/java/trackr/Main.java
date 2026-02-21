@@ -20,6 +20,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        assert Main.class.getResource("/view/MainWindow.fxml") != null
+                : "FXML file not found!";
         FXMLLoader loader = new FXMLLoader(
                 Main.class.getResource("/view/MainWindow.fxml")
         );
@@ -30,6 +32,7 @@ public class Main extends Application {
         stage.show();
 
         MainWindow controller = loader.getController();
+        assert controller != null : "Controller should not be null.";
         controller.setTrackr(trackr);
     }
 }

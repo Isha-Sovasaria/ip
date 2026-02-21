@@ -41,6 +41,11 @@ public class Parser {
      * @throws TrackrException If the command is invalid or incomplete.
      */
     public Command parse(String input) throws TrackrException {
+
+        if (input == null || input.trim().isEmpty()) {
+            throw new TrackrException("Command cannot be empty.");
+        }
+
         input = input.trim();
 
         if (input.equals(COMMAND_BYE)) {
@@ -50,13 +55,16 @@ public class Parser {
             return new ListCommand();
         }
         if (input.startsWith(COMMAND_MARK)) {
-            return new MarkCommand(parseIndex(input, "Please specify a valid task number."));
+            return new MarkCommand(parseIndex(input,
+                    "Please specify a valid task number."));
         }
         if (input.startsWith(COMMAND_UNMARK)) {
-            return new UnmarkCommand(parseIndex(input, "Please specify a valid task number."));
+            return new UnmarkCommand(parseIndex(input,
+                    "Please specify a valid task number."));
         }
         if (input.startsWith(COMMAND_DELETE)) {
-            return new DeleteCommand(parseIndex(input, "Please specify a valid task number to delete."));
+            return new DeleteCommand(parseIndex(input,
+                    "Please specify a valid task number to delete."));
         }
         if (input.startsWith(COMMAND_UPDATE)) {
             return parseUpdateCommand(input);
@@ -81,7 +89,10 @@ public class Parser {
         if (input.equals(COMMAND_TODO)) {
             throw new TrackrException("The description of a todo cannot be empty.");
         }
-        String description = input.substring(COMMAND_TODO.length() + 1);
+        String description = input.substring(COMMAND_TODO.length()).trim();
+        if (description.isEmpty()) {
+            throw new TrackrException("The description of a todo cannot be empty.");
+        }
         return new AddCommand(new ToDo(description));
     }
 
@@ -89,19 +100,30 @@ public class Parser {
         if (input.equals(COMMAND_FIND)) {
             throw new TrackrException("Please specify a keyword to search for.");
         }
-        String keyword = input.substring(COMMAND_FIND.length() + 1);
+        String keyword = input.substring(COMMAND_FIND.length()).trim();
+        if (keyword.isEmpty()) {
+            throw new TrackrException("Please specify a keyword to search for.");
+        }
         return new FindCommand(keyword);
     }
 
     private Command parseUpdateCommand(String input) throws TrackrException {
+
         String rest = input.substring(COMMAND_UPDATE.length()).trim();
+
         if (rest.isEmpty()) {
-            throw new TrackrException("Please specify a task number and update field (e.g. update 1 /desc new description).");
+            throw new TrackrException(
+                    "Please specify a task number and update field "
+                            + "(e.g. update 1 /desc new description).");
         }
-        String[] parts = rest.split(" ", 2);
+
+        String[] parts = rest.split("\\s+", 2);
+
         if (parts.length < 2) {
-            throw new TrackrException("Please specify an update field: /desc, /by, or /from ... /to");
+            throw new TrackrException(
+                    "Please specify an update field: /desc, /by, or /from ... /to");
         }
+
         try {
             int index = Integer.parseInt(parts[0]) - 1;
             String updatePart = parts[1];
@@ -113,63 +135,97 @@ public class Parser {
 
     /**
      * Extracts and parses the task index from commands that require an index.
-     *
-     * @param input The full user input string.
-     * @param errorMessage The error message to use if parsing fails.
-     * @return The zero-based index of the task.
-     * @throws TrackrException If the task index is missing or invalid.
      */
     private int parseIndex(String input, String errorMessage)
             throws TrackrException {
+
+        String[] parts = input.trim().split("\\s+");
+
+        if (parts.length != 2) {
+            throw new TrackrException(
+                    "Invalid format. Please use: command <task number>.");
+        }
+
         try {
-            return Integer.parseInt(input.split(" ")[1]) - 1;
-        } catch (Exception e) {
+            return Integer.parseInt(parts[1]) - 1;
+        } catch (NumberFormatException e) {
             throw new TrackrException(errorMessage);
         }
     }
 
     /**
      * Parses a deadline command and creates the corresponding task.
-     *
-     * @param input The full user input string.
-     * @return The command that adds a deadline task.
-     * @throws TrackrException If the description or date is invalid.
      */
     private Command parseDeadline(String input)
             throws TrackrException {
 
-        if (!input.contains(" /by ")) {
-            throw new TrackrException("A deadline must have a /by date.");
-        }
+        String rest = input.substring(COMMAND_DEADLINE.length()).trim();
 
-        String[] parts = input.substring(COMMAND_DEADLINE.length() + 1).split(" /by ");
-        if (parts[0].isEmpty()) {
+        // Case 1: Nothing after "deadline"
+        if (rest.isEmpty()) {
             throw new TrackrException(
                     "The description of a deadline cannot be empty.");
         }
 
+        // Case 2: Must contain /by
+        if (!rest.contains("/by")) {
+            throw new TrackrException(
+                    "A deadline must contain '/by <yyyy-mm-dd>'.");
+        }
+
+        String[] parts = rest.split("/by", 2);
+
+        String description = parts[0].trim();
+        String datePart = parts.length > 1 ? parts[1].trim() : "";
+
+        // Case 3: Description missing
+        if (description.isEmpty()) {
+            throw new TrackrException(
+                    "The description of a deadline cannot be empty.");
+        }
+
+        // Case 4: Date missing
+        if (datePart.isEmpty()) {
+            throw new TrackrException(
+                    "Please provide a date after '/by'.");
+        }
+
         try {
-            LocalDate date = LocalDate.parse(parts[1]);
-            return new AddCommand(new Deadline(parts[0], date));
+            LocalDate date = LocalDate.parse(datePart);
+            return new AddCommand(new Deadline(description, date));
         } catch (DateTimeParseException e) {
             throw new TrackrException(
                     "Please use yyyy-mm-dd format for dates.");
         }
     }
 
+
+
+    /**
+     * Parses an event command and creates the corresponding task.
+     */
     private Command parseEvent(String input)
             throws TrackrException {
 
-        if (!input.contains(" /from ") || !input.contains(" /to ")) {
-            throw new TrackrException("An event must have /from and /to.");
+        String rest = input.substring(COMMAND_EVENT.length()).trim();
+
+        if (!rest.contains(" /from ") || !rest.contains(" /to ")) {
+            throw new TrackrException(
+                    "Invalid format. Use: event <description> "
+                            + "/from <yyyy-mm-dd> /to <yyyy-mm-dd>");
         }
 
-        String[] parts = input.substring(COMMAND_EVENT.length() + 1).split(" /from | /to ");
+        String[] parts = rest.split(" /from | /to ");
+
+        if (parts.length < 3 || parts[0].trim().isEmpty()) {
+            throw new TrackrException(
+                    "The description of an event cannot be empty.");
+        }
 
         try {
-            LocalDate from = LocalDate.parse(parts[1]);
-            LocalDate to = LocalDate.parse(parts[2]);
-            return new AddCommand(new Event(parts[0], from, to));
+            LocalDate from = LocalDate.parse(parts[1].trim());
+            LocalDate to = LocalDate.parse(parts[2].trim());
+            return new AddCommand(new Event(parts[0].trim(), from, to));
         } catch (DateTimeParseException e) {
             throw new TrackrException(
                     "Please use yyyy-mm-dd format for dates.");
