@@ -25,14 +25,14 @@
                    onAction="#handleUserInput"
                    AnchorPane.leftAnchor="1.0"
                    AnchorPane.bottomAnchor="1.0"
-                   prefWidth="325.0" />
+                   prefWidth="340" />
 
         <Button fx:id="sendButton"
                 text="Send"
                 onAction="#handleUserInput"
                 AnchorPane.rightAnchor="1.0"
                 AnchorPane.bottomAnchor="1.0"
-                prefWidth="55.0" />
+                 prefWidth="55.0"/>
 
     </children>
 </AnchorPane>

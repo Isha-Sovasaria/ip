@@ -51,7 +51,7 @@ public class ParserTest {
                 parser.parse("mark")
         );
 
-        assertEquals("Please specify a valid task number.", e.getMessage());
+        assertEquals("Invalid format. Please use: command <task number>.", e.getMessage());
     }
 
     @Test
